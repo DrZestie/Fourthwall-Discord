@@ -8,7 +8,7 @@ const DISCORD_WEBHOOK_URL = "https://discord.com/api/webhooks/150646007097878537
 app.post("/fourthwall", async (req, res) => {
   res.status(200).send("OK");
 
-  console.log("Fourthwall Event:", req.body);
+  console.log(JSON.stringify(req.body, null, 2));
 
  const order = req.body.data || req.body;
 
