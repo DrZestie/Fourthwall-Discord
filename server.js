@@ -10,15 +10,25 @@ app.post("/fourthwall", async (req, res) => {
 
   console.log("Fourthwall Event:", req.body);
 
-  await fetch(DISCORD_WEBHOOK_URL, {
-    method: "POST",
-    headers: {
-      "Content-Type": "application/json",
-    },
-    body: JSON.stringify({
-      content: "🛒 New order on Trashy's merch store!",
-    }),
-  });
+ const order = req.body.data || req.body;
+
+const total =
+  order.total?.formatted ||
+  order.totalAmount?.formatted ||
+  order.amount?.formatted ||
+  order.total ||
+  order.totalAmount ||
+  "Amount not available";
+
+await fetch(DISCORD_WEBHOOK_URL, {
+  method: "POST",
+  headers: {
+    "Content-Type": "application/json",
+  },
+  body: JSON.stringify({
+   content: `🛒 New order on Trashy's merch store!\n💰 Amount spent: ${total}`,
+  }),
+});
 });
 
 app.listen(3000, () => {
