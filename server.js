@@ -15,8 +15,8 @@ app.post("/fourthwall", async (req, res) => {
 const total =
   `$${order.amounts?.total?.value ?? 0} ${order.amounts?.total?.currency ?? ""}`;
 const items =
-  order.lineItems
-    ?.map(item => `• ${item.quantity || 1}x ${item.title || item.name}`)
+  order.offers
+    ?.map(item => `• ${item.quantity || 1}x ${item.name}`)
     .join("\n") ||
   "Items unavailable";
 await fetch(DISCORD_WEBHOOK_URL, {
