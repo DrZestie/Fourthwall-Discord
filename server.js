@@ -13,33 +13,25 @@ app.post("/fourthwall", async (req, res) => {
  const order = req.body.data || req.body;
 
 const total =
-  order.total?.formatted ||
-  order.totalAmount?.formatted ||
-  order.amount?.formatted ||
-  order.total ||
-  order.totalAmount ||
-  "Amount not available";
-
+  `$${order.amounts?.total?.value ?? 0} ${order.amounts?.total?.currency ?? ""}`;
 const items =
-  order.items
-    ?.map(item => `• ${item.quantity || 1}x ${item.name || item.productName}`)
+  order.lineItems
+    ?.map(item => `• ${item.quantity || 1}x ${item.title || item.name}`)
     .join("\n") ||
   "Items unavailable";
-
 await fetch(DISCORD_WEBHOOK_URL, {
   method: "POST",
   headers: {
     "Content-Type": "application/json",
   },
   body: JSON.stringify({
-    content:
-`🛒 New order on Trashy's Back Alley Merch Store!
+  content: `🛒 New order on Trashy's Back Alley Merch Store!
 
 💰 Amount spent: ${total}
 
 📦 Items:
-${items}`,
-  }),
+${items}`
+}),
 });
 });
 
