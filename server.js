@@ -20,13 +20,25 @@ const total =
   order.totalAmount ||
   "Amount not available";
 
+const items =
+  order.items
+    ?.map(item => `• ${item.quantity || 1}x ${item.name || item.productName}`)
+    .join("\n") ||
+  "Items unavailable";
+
 await fetch(DISCORD_WEBHOOK_URL, {
   method: "POST",
   headers: {
     "Content-Type": "application/json",
   },
   body: JSON.stringify({
-   content: `🛒 New order on Trashy's merch store!\n💰 Amount spent: ${total}`,
+    content:
+`🛒 New order on Trashy's Back Alley Merch Store!
+
+💰 Amount spent: ${total}
+
+📦 Items:
+${items}`,
   }),
 });
 });
