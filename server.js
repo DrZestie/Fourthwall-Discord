@@ -59,6 +59,9 @@ await fetch(DISCORD_WEBHOOK_URL, {
     ]
   })
 });
+
+});
+
 app.listen(3000, () => {
   console.log("Server running on port 3000");
 });
