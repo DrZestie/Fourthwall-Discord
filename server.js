@@ -5,12 +5,23 @@ app.use(express.json());
 
 const DISCORD_WEBHOOK_URL = "https://discord.com/api/webhooks/1506460070978785372/_fknexXv1ft2rLqx55Pr0Bp4ITNjSyQrurUcjeUw8rDW8at1oh_rDMfS59TMGXO1rkZ-";
 
+const processedOrders = new Set();
+
 app.post("/fourthwall", async (req, res) => {
   res.status(200).send("OK");
 
   console.log(JSON.stringify(req.body, null, 2));
 
  const order = req.body.data || req.body;
+
+const orderId = order.id;
+
+if (processedOrders.has(orderId)) {
+  console.log("Duplicate order ignored:", orderId);
+  return res.status(200).send("Duplicate ignored");
+}
+
+processedOrders.add(orderId);
 
 const total =
   `${order.amounts?.total?.value ?? 0} ${order.amounts?.total?.currency ?? ""}`;
