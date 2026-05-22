@@ -3,7 +3,7 @@ import express from "express";
 const app = express();
 app.use(express.json());
 
-const DISCORD_WEBHOOK_URL = "https://discord.com/api/webhooks/1507205538147074130/h7kKhQS-AbGGMEtmcZF2y2TjMZEDZOk2cAn6HgpQGA-jCYL_7OCJ8q8VrB8Fx85Mikzu";
+const DISCORD_WEBHOOK_URL = process.env.DISCORD_WEBHOOK_URL;
 
 const processedOrders = new Set();
 
